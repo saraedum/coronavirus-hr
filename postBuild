@@ -1,0 +1,6 @@
+#!/bin/bash
+# This file is run by binder when building the environment. Marking the
+# notebook as trusted makes the images show up immediately since the embedded
+# JavaScript is allowed to run.
+jupyter trust Koronavirus.ipynb
+

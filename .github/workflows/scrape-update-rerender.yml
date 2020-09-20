@@ -1,0 +1,30 @@
+name: Scrape & Update & Rerender
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: setup-conda
+        uses: s-weigand/setup-conda@v1.0.5
+        with:
+          conda-channels: 'conda-forge'
+      - uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: conda install -y click beautifulsoup4 nbconvert ipykernel pandas plotly
+      - name: Update .csv data
+        run: ./scripts/update-csv.sh
+      - name: Rerender Jupyter notebook
+        run: ./scripts/rerender-notebook.sh
+      - name: Commit Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -m "Update & Rerender" -a || true
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
