@@ -4,7 +4,7 @@
 
 # Coronavirus Dashboard for Croatia
 
-A [Jupyter Notebook](https://jupyter.org/) that gives an overview of reported [SARS-CoV-2](https://en.wikipedia.org/wiki/Severe_acute_respiratory_syndrome_coronavirus_2) infections in Croatia. It uses historic data from [koronavirus.hr](https://koronavirus.hr) to provide a breakdown for each of the [counties of Croatia](https://en.wikipedia.org/wiki/Counties_of_Croatia). The data used here can also be downloaded as a [koronavirus.csv](./koronavirus.csv) file. If you spot a mistake, please create an [issue](https://github.com/saraedum/koronavirus-hr/issues) or a [pull request](https://github.com/saraedum/koronavirus-hr/pulls).
+A [Jupyter Notebook](https://jupyter.org/) of the reported [SARS-CoV-2](https://en.wikipedia.org/wiki/Severe_acute_respiratory_syndrome_coronavirus_2) infections in Croatia. It uses historic data from [koronavirus.hr](https://koronavirus.hr) to provide a breakdown for each of the [counties of Croatia](https://en.wikipedia.org/wiki/Counties_of_Croatia). The data used here can also be downloaded as a [koronavirus.csv](./koronavirus.csv) file. If you spot a mistake, please create an [issue](https://github.com/saraedum/koronavirus-hr/issues) or a [pull request](https://github.com/saraedum/koronavirus-hr/pulls).
 
 The notebook is automatically rerendered every hour. You can follow either of these links to go to a static or an editable version of the notebook.
 
