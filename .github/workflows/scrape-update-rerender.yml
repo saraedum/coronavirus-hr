@@ -15,9 +15,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install Dependencies
         shell: bash -l {0}
-        run: mamba install -y click beautifulsoup4 nbconvert ipykernel pandas plotly
-      - name: "Setup tmate session"
-        uses: mxschmitt/action-tmate@v3
+        run: mamba install -y click beautifulsoup4 nbconvert ipykernel pandas plotly selenium geckodriver
       - name: Update .csv data
         shell: bash -l {0}
         run: ./scripts/update-csv.sh
