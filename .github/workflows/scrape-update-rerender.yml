@@ -12,9 +12,12 @@ jobs:
       - uses: conda-incubator/setup-miniconda@v2
         with: { mamba-version: "*", channels: "conda-forge", channel-priority: true }
       - uses: actions/checkout@v2
-      - name: Install Dependencies
+      - name: Install Conda Dependencies
         shell: bash -l {0}
-        run: mamba install -y click beautifulsoup4 nbconvert ipykernel pandas plotly selenium geckodriver
+        run: mamba install -y click beautifulsoup4 nbconvert ipykernel pandas plotly pip
+      - name: Install PyPI Dependencies
+        shell: bash -l {0}
+        run: pip install cloudscraper
       - name: Update .csv data
         shell: bash -l {0}
         run: ./scripts/update-csv.sh
