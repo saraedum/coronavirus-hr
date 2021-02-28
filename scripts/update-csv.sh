@@ -4,7 +4,8 @@ set -e
 cd "$(dirname "$0")"
 
 tmp=`mktemp`
-wget https://www.koronavirus.hr -O $tmp
+# The cloudflare setup seems to rate limit github so we get 503 errors. Use an open proxy instead.
+http_proxy=192.109.165.129 wget https://www.koronavirus.hr -O $tmp
 
 ./parse-koronavirus-hr.py $tmp >> ../koronavirus.csv
 
