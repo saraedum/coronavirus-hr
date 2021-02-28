@@ -4,7 +4,7 @@ set -e
 cd "$(dirname "$0")"
 
 tmp=`mktemp`
-wget koronavirus.hr -O $tmp
+wget https://www.koronavirus.hr -O $tmp
 
 ./parse-koronavirus-hr.py $tmp >> ../koronavirus.csv
 
