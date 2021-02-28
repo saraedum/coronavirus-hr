@@ -3,28 +3,33 @@ name: Scrape & Update & Rerender
 on:
   schedule:
     - cron: "*/30 * * * *"
+  pull_request: { branches: [ "master" ] }
+  push: { branches: [ "master" ] }
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
-      - name: setup-conda
-        uses: s-weigand/setup-conda@v1.0.5
-        with:
-          conda-channels: 'conda-forge'
+      - uses: conda-incubator/setup-miniconda@v2
+        with: { mamba-version: "*", channels: "conda-forge", channel-priority: true }
       - uses: actions/checkout@v2
       - name: Install Dependencies
-        run: conda install -y click beautifulsoup4 nbconvert ipykernel pandas plotly
+        shell: bash -l {0}
+        run: mamba install -y click beautifulsoup4 nbconvert ipykernel pandas plotly
       - name: Update .csv data
+        shell: bash -l {0}
         run: ./scripts/update-csv.sh
       - name: Rerender Jupyter notebook
+        shell: bash -l {0}
         run: git diff --exit-code || ./scripts/rerender-notebook.sh
       - name: Commit Changes
+        shell: bash -l {0}
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git commit -m "Update & Rerender" -a || true
       - name: Push changes
+        if: ${{ github.event_name == 'schedule' || github.event_name == 'push' }}
         uses: ad-m/github-push-action@master
         with:
           branch: master
