@@ -4,7 +4,6 @@ on:
   schedule:
     - cron: "*/30 * * * *"
   pull_request: { branches: [ "master" ] }
-  push: { branches: [ "master" ] }
 
 jobs:
   build:
@@ -29,7 +28,7 @@ jobs:
           git config --local user.name "GitHub Action"
           git commit -m "Update & Rerender" -a || true
       - name: Push changes
-        if: ${{ github.event_name == 'schedule' || github.event_name == 'push' }}
+        if: ${{ github.event_name == 'schedule' }}
         uses: ad-m/github-push-action@master
         with:
           branch: master
