@@ -9,23 +9,18 @@ import click
 import sys
 import csv
 import datetime
+import json
 
-from bs4 import BeautifulSoup, NavigableString
-
-županji = ['bjelovarsko-bilogorska', 'brodsko-posavska', 'dubrovacko-neretvanska', 'grad-zagreb', 'istarska', 'karlovacka', 'koprivnicko-krizevacka', 'krapinsko-zagorska-zupanija', 'licko-senjska', 'medjimurska', 'osjecko-baranjska', 'pozesko-slavonska', 'primorsko-goranska', 'sibensko-kninska', 'sisacko-moslavacka', 'splitsko-dalmatinska', 'varazdinska', 'viroviticko-podravska', 'vukovarsko-srijemska', 'zadarska', 'zagrebacka']
+županji = ['bjelovarsko_bilogorska', 'brodsko_posavska', 'dubrovacko_neretvanska', 'grad_zagreb', 'istarska', 'karlovacka', 'koprivnicko_krizevacka', 'krapinsko_zagorska', 'licko_senjska', 'medjimurska', 'osjecko_baranjska', 'pozesko_slavonska', 'primorsko_goranska', 'sibensko_kninska', 'sisacko_moslavacka', 'splitsko_dalmatinska', 'varazdinska', 'viroviticko_podravska', 'vukovarsko_srijemska', 'zadarska', 'zagrebacka']
 
 @click.command()
 @click.argument('input', type=click.File('rb'))
 def parse(input):
-    soup = BeautifulSoup(input, 'html.parser')
+    soup = json.load(input)
 
-    timestamp = soup.find('span', attrs={"class": "date"})
-    date = datetime.datetime.strptime(timestamp.text, "%d.%m.%Y. %H:%M")
+    date = datetime.datetime.strptime(soup['lastUpdated'], "%Y-%m-%dT%H:%M:%S.000Z")
 
-    zarazeni = soup.findAll('text', attrs={"class": "zarazeni"})
-    zarazeni = { z['data-url'].split('/')[3]: int(z.text.replace('.', '')) for z in zarazeni if z['data-url']}
-
-    output = [date.strftime("%Y-%m-%d 12:00:00")] + [zarazeni.get(ž, 0) for ž in županji]
+    output = [date.strftime("%Y-%m-%d 12:00:00")] + [soup['hrvatska'][ž]['infected'] for ž in županji]
     csv.writer(sys.stdout, delimiter=',').writerow(output)
 
     if datetime.datetime.now() - date > datetime.timedelta(days=2):
