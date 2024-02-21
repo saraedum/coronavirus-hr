@@ -1,3 +1,5 @@
+Archived: koronavirus.hr does not exist anymore. I guess the Croatian government is not publishing such numbers anymore.
+
 <a href="https://github.com/saraedum/koronavirus-hr/actions">
 <img align="right" src="https://github.com/saraedum/koronavirus-hr/workflows/Scrape%20&%20Update%20&%20Rerender/badge.svg">
 </a>
